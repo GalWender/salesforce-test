@@ -1,0 +1,40 @@
+<template>
+  <lightning-card title="Saved service request">
+    <div class="slds-p-around_medium slds-is-relative">
+      <template lwc:if={isLoading}>
+        <lightning-spinner
+          alternative-text="Loading request"
+          size="small"
+        ></lightning-spinner>
+      </template>
+      <template lwc:elseif={errorMessage}>
+        <p role="alert" class="slds-text-color_error">{errorMessage}</p>
+        <lightning-button
+          label="Retry"
+          onclick={loadRequest}
+        ></lightning-button>
+      </template>
+      <template lwc:elseif={request}>
+        <dl class="slds-list_horizontal slds-wrap">
+          <dt class="slds-item_label slds-truncate">Request</dt>
+          <dd class="slds-item_detail">{request.Name}</dd>
+          <dt class="slds-item_label slds-truncate">Customer</dt>
+          <dd class="slds-item_detail">{customerName}</dd>
+          <dt class="slds-item_label slds-truncate">Priority</dt>
+          <dd class="slds-item_detail">{request.Priority__c}</dd>
+          <dt class="slds-item_label slds-truncate">Status</dt>
+          <dd class="slds-item_detail">{request.Status__c}</dd>
+          <dt class="slds-item_label slds-truncate">Description</dt>
+          <dd class="slds-item_detail">
+            <lightning-formatted-text
+              value={request.Description__c}
+            ></lightning-formatted-text>
+          </dd>
+        </dl>
+      </template>
+      <template lwc:else>
+        <p>Save a service request to see its latest details here.</p>
+      </template>
+    </div>
+  </lightning-card>
+</template>

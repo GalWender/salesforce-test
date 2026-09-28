@@ -1,4 +1,9 @@
-trigger ServiceRequestTrigger on ServiceRequest__c (after insert, after update) { // we don't need "before" because based on the task there are only mentions of what happens after an update and creations
-    
-    ServiceRequestHandler.handle(Trigger.new,Trigger.oldMap,Trigger.isInsert,Trigger.isUpdate);
+trigger ServiceRequestTrigger on ServiceRequest__c(after insert, after update) {
+  // we need the request id for its tasks and audits
+  ServiceRequestHandler.handle(
+    Trigger.new,
+    Trigger.oldMap,
+    Trigger.isInsert,
+    Trigger.isUpdate
+  );
 }

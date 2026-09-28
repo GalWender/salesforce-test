@@ -1,0 +1,63 @@
+<template>
+  <lightning-card title="New service request">
+    <form class="slds-p-around_medium slds-is-relative" onsubmit={handleSave}>
+      <lightning-record-picker
+        label="Customer (optional)"
+        object-api-name="Customer__c"
+        value={customerId}
+        onchange={handleCustomerChange}
+        disabled={isSaving}
+      ></lightning-record-picker>
+      <lightning-combobox
+        name="priority"
+        label="Priority"
+        value={priority}
+        options={priorityOptions}
+        onchange={handleFieldChange}
+        disabled={isSaving}
+        required
+      ></lightning-combobox>
+      <lightning-combobox
+        name="status"
+        label="Status"
+        value={status}
+        options={statusOptions}
+        onchange={handleFieldChange}
+        disabled={isSaving}
+        required
+      ></lightning-combobox>
+      <lightning-textarea
+        name="description"
+        label="Description"
+        value={description}
+        onchange={handleFieldChange}
+        maxlength="32768"
+        disabled={isSaving}
+        required
+      ></lightning-textarea>
+      <template lwc:if={isSaving}>
+        <lightning-spinner
+          alternative-text="Saving request"
+          size="small"
+        ></lightning-spinner>
+      </template>
+      <template lwc:if={successMessage}>
+        <p role="status" class="slds-text-color_success slds-m-top_small">
+          {successMessage}
+        </p>
+      </template>
+      <template lwc:if={errorMessage}>
+        <p role="alert" class="slds-text-color_error slds-m-top_small">
+          {errorMessage}
+        </p>
+      </template>
+      <lightning-button
+        type="submit"
+        label="Save"
+        variant="brand"
+        disabled={isSaving}
+        class="slds-m-top_medium"
+      ></lightning-button>
+    </form>
+  </lightning-card>
+</template>
